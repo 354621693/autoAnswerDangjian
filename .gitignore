@@ -1,2 +1,7 @@
 /.idea/**
 
+/app/.mvn/wrapper/maven-wrapper.jar
+/app/.mvn/wrapper/maven-wrapper.properties
+/app/mvnw
+/app/mvnw.cmd
+/app/.mvn/wrapper/maven-wrapper.jar
