@@ -1,0 +1,11 @@
+spring:
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
+  application:
+    name: dati-app
+  profiles:
+    active: locals
+
+es:
+  uris: http://localhost:9200

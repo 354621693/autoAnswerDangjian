@@ -1,0 +1,34 @@
+https://blog.csdn.net/m0_37294838/article/details/127235741
+
+1、使用es的ik分词器：https://github.com/medcl/elasticsearch-analysis-ik/releases
+分词器下载后解压到ES安装目录的plugins目录中即可，安装分词器后需要重新启动ES服务器。使用IK分词器创建索引格式
+2、创建所以并指定使用ik分词器
+PUT请求		http://localhost:9200/books
+
+请求参数如下（注意是json格式的参数）
+{
+    "mappings":{							#定义mappings属性，替换创建索引时对应的mappings属性
+        "properties":{						#定义索引中包含的属性设置
+            "id":{							#设置索引中包含id属性
+                "type":"keyword"			#当前属性可以被直接搜索
+            },
+            "name":{						#设置索引中包含name属性
+                "type":"text",              #当前属性是文本信息，参与分词
+                "analyzer":"ik_max_word",   #使用IK分词器进行分词
+                "copy_to":"all"				#分词结果拷贝到all属性中
+            },
+            "type":{
+                "type":"keyword"
+            },
+            "description":{
+                "type":"text",
+                "analyzer":"ik_max_word",
+                "copy_to":"all"
+            },
+            "all":{							#定义属性，用来描述多个字段的分词结果集合，当前属性可以参与查询
+                "type":"text",
+                "analyzer":"ik_max_word"
+            }
+        }
+    }
+}
