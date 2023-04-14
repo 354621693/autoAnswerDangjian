@@ -5,7 +5,7 @@ spring:
   application:
     name: dati-app
   profiles:
-    active: locals
+    active: local
 
 es:
   uris: http://localhost:9200
