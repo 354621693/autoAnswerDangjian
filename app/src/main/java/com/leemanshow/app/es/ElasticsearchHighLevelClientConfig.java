@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class ElasticsearchHighLevelClientConfig {
     @Value("${es.uris}")
     private String uris;
-    @Bean
+    @Bean(destroyMethod = "close") //表示连接使用完成后需要关闭
     public RestHighLevelClient getHighLevelClient(){
         HttpHost host = HttpHost.create(uris);
         RestClientBuilder builder = RestClient.builder(host);

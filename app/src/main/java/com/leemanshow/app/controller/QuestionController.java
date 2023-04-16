@@ -1,14 +1,12 @@
 package com.leemanshow.app.controller;
 
 import com.leemanshow.app.common.ResponseVO;
-import com.leemanshow.app.domain.vo.FindQuestionVO;
+import com.leemanshow.app.es.bo.QuestionSearchResult;
 import com.leemanshow.app.service.QuestionService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 
 /**
  * 题目服务入口
@@ -21,8 +19,14 @@ public class QuestionController {
     QuestionService questionService;
 
 
-    @GetMapping("/questions")
-    public ResponseVO<FindQuestionVO> findQuestions(String question){
+    @GetMapping("/search")
+    public ResponseVO<QuestionSearchResult> findQuestions(String question) throws IOException {
         return ResponseVO.success(questionService.getQuestion(question));
+    }
+
+    @PostMapping("/upload")
+    public ResponseVO<Void> uploadQuestion(@RequestBody String json) throws IOException {
+        questionService.insertQuestion(json);
+        return ResponseVO.success(null, "题目上传成功~");
     }
 }
