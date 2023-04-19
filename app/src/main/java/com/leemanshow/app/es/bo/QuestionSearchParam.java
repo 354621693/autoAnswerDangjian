@@ -12,7 +12,7 @@ import java.util.List;
 public class QuestionSearchParam {
     public final static String INDEX_NAME = ElasticSearchConstant.INDEX_NAME_QUESTIONS;
 
-    private String title;
+    private String question;
     private String answer;
     private String createTime;
     // 查询条件 sort:[{"createTime":" asc/desc"}]

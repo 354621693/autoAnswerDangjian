@@ -44,7 +44,7 @@ class QuestionControllerTest {
         //void类型的service方法要特殊处理
         // doNothing().when(questionService).insertQuestion(any(String.class));
         ObjectNode objectNode = JacksonUtil.getObjectMapper().createObjectNode();
-        objectNode.put("title", "中国第一个青年团早期组织（）社会主义青年团是于1920年8月诞生的。");
+        objectNode.put("question", "中国第一个青年团早期组织（）社会主义青年团是于1920年8月诞生的。");
         objectNode.put("answer", "上海");
         objectNode.put("choice", "c");
         mockMvc.perform(MockMvcRequestBuilders.post("/dati/upload")

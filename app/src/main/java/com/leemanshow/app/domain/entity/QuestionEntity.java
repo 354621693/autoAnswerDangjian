@@ -7,7 +7,7 @@ public class QuestionEntity {
     /**
      * 问题
      */
-    String title;
+    String question;
     /**
      * 答案
      */

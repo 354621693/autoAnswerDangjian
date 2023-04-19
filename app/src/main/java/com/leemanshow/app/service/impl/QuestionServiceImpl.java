@@ -22,7 +22,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public QuestionSearchResult getQuestion(String question) throws IOException {
         QuestionSearchParam searchParam = new QuestionSearchParam();
-        searchParam.setTitle(question);
+        searchParam.setQuestion(question);
         return esService.searchQuestion(searchParam);
     }
 
@@ -30,7 +30,7 @@ public class QuestionServiceImpl implements QuestionService {
     public void insertQuestion(String json) throws IOException {
         JsonNode jsonNode = JacksonUtil.getObjectMapper().readTree(json);
         QuestionEntity entity = new QuestionEntity();
-        entity.setTitle(jsonNode.get("title").asText());
+        entity.setQuestion(jsonNode.get("question").asText());
         entity.setAnswer(jsonNode.get("answer").asText());
         entity.setChoice(jsonNode.get("choice").asText());
         entity.setCreateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));

@@ -10,7 +10,6 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.admin.indices.alias.Alias;
 import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.support.ActiveShardCount;
@@ -20,7 +19,6 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.common.unit.TimeValue;
-import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -57,7 +55,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
                 sourceAsMap.forEach((k, v) -> {
                     QuestionEntity questionEntity = new QuestionEntity();
                     questionEntity.setAnswer((String) sourceAsMap.get("answer"));
-                    questionEntity.setTitle((String) sourceAsMap.get("title"));
+                    questionEntity.setQuestion((String) sourceAsMap.get("question"));
                     questionEntity.setChoice((String) sourceAsMap.get("choice"));
                     list.add(questionEntity);
                 });
@@ -72,14 +70,14 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
         IndexRequest indexRequest = new IndexRequest(ElasticSearchConstant.INDEX_NAME_QUESTIONS);
 //                .source(XContentFactory.jsonBuilder()
 //                        .startObject()
-//                        .field("title", questionEntity.getTitle())
+//                        .field("question", questionEntity.getQuestion())
 //                        .field("answer", questionEntity.getAnswer())
 //                        .field("choice", questionEntity.getChoice())
 //                        .field("creatTime", questionEntity.getCreateTime())
 //                        .endObject()
 //                );
         String questionJson = JacksonUtil.getObjectMapper().writeValueAsString(questionEntity);
-        // indexRequest.source(XContentType.JSON,"title","正式党员不足7人的党支部，设1名书记，1名副书记（）","answer","错");
+        // indexRequest.source(XContentType.JSON,"question","正式党员不足7人的党支部，设1名书记，1名副书记（）","answer","错");
         indexRequest.source(questionJson, XContentType.JSON);
         //计算md5作为es文档的id，可以避免重复插入的问题。但是在多节点es中，可能被重复插到不同的分片中，所以必要时要在查询时使用聚合来去重。
         String md5 = DigestUtils.md5DigestAsHex(questionJson.getBytes(StandardCharsets.UTF_8));
@@ -98,8 +96,8 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
         // 构建DSL
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
-        if (StringUtils.isNotBlank(query.getTitle())) {
-            boolQuery.must(QueryBuilders.matchQuery("title", query.getTitle()));
+        if (StringUtils.isNotBlank(query.getQuestion())) {
+            boolQuery.must(QueryBuilders.matchQuery("question", query.getQuestion()));
         }
         if (StringUtils.isNotBlank(query.getAnswer())) {
             boolQuery.must(QueryBuilders.matchQuery("answer", query.getAnswer()));
@@ -126,9 +124,9 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
     void createQuestionsIndex() throws IOException {
         CreateIndexRequest createIndexRequest = new CreateIndexRequest("questions");
         //指定映射方式2  索引名称必须小写  这个测试成功了 但是只有一个字段 如果想要多个字段呢?
-        Map<String, Object> title = new HashMap<>();
-        title.put("type", "text");
-        title.put("analyzer", "ik_smart");
+        Map<String, Object> question = new HashMap<>();
+        question.put("type", "text");
+        question.put("analyzer", "ik_smart");
 
         Map<String, Object> answer = new HashMap<>();
         answer.put("type", "text");
@@ -139,7 +137,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
 
         //把声明好的字段塞到配置中
         Map<String, Object> properties = new HashMap<>();
-        properties.put("title", title);
+        properties.put("question", question);
         properties.put("answer", answer);
         properties.put("choice", choice);
 

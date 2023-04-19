@@ -17,8 +17,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -31,7 +29,7 @@ class ElasticsearchServiceImplTest {
     @DisplayName("测试es查询题库")
     void searchQuestion() throws IOException {
         QuestionSearchParam questionSearchParam = new QuestionSearchParam();
-        questionSearchParam.setTitle("伟大");
+        questionSearchParam.setQuestion("伟大");
         QuestionSearchResult result = service.searchQuestion(questionSearchParam);
         log.info(JacksonUtil.getObjectMapper().writeValueAsString(result));
     }
@@ -40,7 +38,7 @@ class ElasticsearchServiceImplTest {
     @DisplayName("测试es插入题目")
     void insertQuestion() throws IOException {
         QuestionEntity entity = new QuestionEntity();
-        entity.setTitle("深入学习和贯彻“创新、协调、绿色、开放、共享”五大发展理念对破解我国发展难题具有重要意义，其中“协调”发展理念致力于破解（）难题。");
+        entity.setQuestion("深入学习和贯彻“创新、协调、绿色、开放、共享”五大发展理念对破解我国发展难题具有重要意义，其中“协调”发展理念致力于破解（）难题。");
         entity.setAnswer("发展结构失衡");
         entity.setChoice(null);
         LocalDateTime now = LocalDateTime.now();
