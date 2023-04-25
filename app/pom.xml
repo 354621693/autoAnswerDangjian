@@ -7,11 +7,11 @@
         <version>1.0.0</version>
         <artifactId>autoAnswerDangjian</artifactId><!-- lookup parent from repository -->
     </parent>
-    <groupId>com.leemanshow</groupId>
     <artifactId>app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>app</name>
     <description>app</description>
+    <packaging>jar</packaging>
     <properties>
         <java.version>8</java.version>
     </properties>
@@ -88,13 +88,27 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.2</version>
+<!--                <configuration>-->
+<!--                    <excludes>-->
+<!--                        <exclude>-->
+<!--                            <groupId>org.projectlombok</groupId>-->
+<!--                            <artifactId>lombok</artifactId>-->
+<!--                        </exclude>-->
+<!--                    </excludes>-->
+<!--                </configuration>-->
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
                 <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
+                    <includeSystemScope>true</includeSystemScope>
+                    <mainClass>com.leemanshow.app.AppApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
