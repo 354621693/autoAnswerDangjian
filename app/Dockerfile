@@ -36,4 +36,4 @@ CMD timestamp=$(date +%Y%m%d%H%M%S) \
     ${jvm_heap_size} \
     -XX:+PrintClassHistogram -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC \
     -Xloggc:logs/${HOSTNAME}-gc/-${timestamp}.log \
-    -jar /usr/myapp/app.jar
+    -jar /usr/myapp/app.jar  -Dspring.profiles.active=${ACTIVE_PROFILE}
