@@ -1,11 +1,3 @@
 spring:
-  elasticsearch:
-    rest:
-      uris: http://localhost:9200
-  application:
-    name: dati-app
   profiles:
-    active: local
-
-es:
-  uris: http://114.132.175.198:9200
+    active: ${ACTIVE_PROFILE:local}
