@@ -4,8 +4,6 @@ spring:
       uris: http://localhost:9200
   application:
     name: dati-app
-  profiles:
-    active: local
 
 es:
   uris: http://114.132.175.198:9200
