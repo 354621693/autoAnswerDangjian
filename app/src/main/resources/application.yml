@@ -1,3 +1,14 @@
 spring:
   profiles:
     active: ${ACTIVE_PROFILE:local}
+# 日志级别
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+
+# 控制台日志格式环境变量
+CONSOLE_LOG_PATTERN: '%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%thread] %cyan(%logger{15}) - %msg%n'
+
+# 请求和响应日志格式环境变量
+HTTP_LOG_PATTERN: '%d{yyyy-MM-dd HH:mm:ss} %msg%n'
