@@ -1,11 +1,11 @@
 spring:
   elasticsearch:
     rest:
-      uris: http://localhost:9200
+      uris: http://10.0.12.8:9200
   application:
     name: dati-app
 
 
 es:
-  uris: http://localhost:9200
-
+  uris: http://10.0.12.8:9200
+ssss
